@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL 2025 Live Score</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a3e72;
+            --secondary-color: #f5a623;
+            --dark-color: #333;
+            --light-color: #f5f5f5;
+            --white: #ffffff;
+            --gray: #666;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo img {
+            height: 50px;
+        }
+        
+        .logo-text h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .logo-text p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Navigation Styles */
+        nav {
+            background-color: var(--white);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .nav-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .nav-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .nav-links a.active {
+            color: var(--secondary-color);
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+        
+        /* Main Content Styles */
+        main {
+            flex: 1;
+            padding: 2rem;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Live Score Styles */
+        .live-score-container {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        /* Schedule Styles */
+        .schedule-container {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .match-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .match-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .match-date {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .teams {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1rem 0;
+        }
+        
+        .team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .team-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+            padding: 3px;
+        }
+        
+        .vs {
+            font-weight: bold;
+            color: var(--gray);
+        }
+        
+        .match-info {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+        
+        /* Teams Styles */
+        .teams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .team-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .team-logo-large {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--primary-color);
+        }
+        
+        .team-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Stats Styles */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .stats-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .stats-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+        
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .stats-table th {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 0.8rem;
+            text-align: left;
+        }
+        
+        .stats-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .stats-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        /* News Styles */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .news-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .news-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .news-content {
+            padding: 1.5rem;
+        }
+        
+        .news-date {
+            color: var(--secondary-color);
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .news-title {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .read-more {
+            display: inline-block;
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 1rem;
+        }
+        
+        .read-more:hover {
+            color: var(--secondary-color);
+        }
+        
+        /* Common Styles */
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+        
+        .highlight {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 2rem;
+        }
+        
+        .footer-section {
+            flex: 1;
+            padding: 0 1rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 0.5rem;
+            display: block;
+            text-decoration: none;
+        }
+        
+        .footer-section a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icons a {
+            color: var(--white);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-content, .footer-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+                gap: 0;
+            }
+            
+            .nav-links a {
+                padding: 0.8rem;
+                text-align: center;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .teams {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .footer-section {
+                margin-bottom: 1.5rem;
+                text-align: center;
+            }
+            
+            .social-icons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\ipl logo.png" alt="IPL Logo">
+                    <div class="logo-text">
+                        <h1>IPL 2025 Live Score</h1>
+                        <p>Your ultimate cricket companion</p>
+                    </div>
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search matches or teams...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Navigation Bar -->
+        <nav>
+            <div class="nav-container">
+                <div class="nav-title">IPL Tracer</div>
+                <div class="nav-links">
+                    <a href="#" class="tab-link active" data-tab="live">Live Score</a>
+                    <a href="#" class="tab-link" data-tab="schedule">Schedule</a>
+                    <a href="#" class="tab-link" data-tab="teams">Teams</a>
+                    <a href="#" class="tab-link" data-tab="stats">Stats</a>
+                    <a href="#" class="tab-link" data-tab="news">News</a>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Main Content -->
+        <main>
+            <!-- Live Score Tab -->
+            <div id="live" class="tab-content active">
+                <div class="live-score-container">
+                    <p>Live data will appear here when matches are in progress</p>
+                </div>
+                
+                <div class="stats-section">
+                    <h2 class="section-title">IPL 2025 Stats and Highlights</h2>
+                    <table class="stats-table">
+                        <thead>
+                            <tr>
+                                <th>Total Matches</th>
+                                <th>Teams</th>
+                                <th>Tournament</th>
+                                <th>Highest Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="highlight">74</td>
+                                <td class="highlight">10</td>
+                                <td>Duration</td>
+                                <td class="highlight">246/7</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="duration">51 days</div>
+                </div>
+            </div>
+            
+            <!-- Schedule Tab -->
+            <div id="schedule" class="tab-content">
+                <h2 class="section-title">IPL 2025 Schedule</h2>
+                <div class="schedule-container">
+                    <div class="match-card">
+                        <div class="match-date">April 20, 2025 • 7:30 PM IST</div>
+                        <div class="teams">
+                            <div class="team">
+                                <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\mi.jpeg" alt="MI" class="team-logo">
+                                <span>Mumbai Indians</span>
+                            </div>
+                            <div class="vs">vs</div>
+                            <div class="team">
+                                <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\csk.jpeg" alt="CSK" class="team-logo">
+                                <span>Chennai Super Kings</span>
+                            </div>
+                        </div>
+                        <div class="match-info">
+                            <span class="venue">Wankhede Stadium, Mumbai</span>
+                        </div>
+                    </div>
+                    
+                    <div class="match-card">
+                        <div class="match-date">April 21, 2025 • 7:30 PM IST</div>
+                        <div class="teams">
+                            <div class="team">
+                                <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\rcb.jpeg" alt="RCB" class="team-logo">
+                                <span>Royal Challengers Bangalore</span>
+                            </div>
+                            <div class="vs">vs</div>
+                            <div class="team">
+                                <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\kkr.jpeg" alt="KKR" class="team-logo">
+                                <span>Kolkata Knight Riders</span>
+                            </div>
+                        </div>
+                        <div class="match-info">
+                            <span class="venue">M. Chinnaswamy Stadium, Bengaluru</span>
+                        </div>
+                    </div>
+                    
+                    <div class="match-card">
+                        <div class="match-date">April 22, 2025 • 7:30 PM IST</div>
+                        <div class="teams">
+                            <div class="team">
+                                <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\dc.jpeg" alt="DC" class="team-logo">
+                                <span>Delhi Capitals</span>
+                            </div>
+                            <div class="vs">vs</div>
+                            <div class="team">
+                                <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\pk.jpeg" alt="PBKS" class="team-logo">
+                                <span>Punjab Kings</span>
+                            </div>
+                        </div>
+                        <div class="match-info">
+                            <span class="venue">Arun Jaitley Stadium, Delhi</span>
+                        </div>
+                    </div>
+                    
+                    <div class="match-card">
+                        <div class="match-date">April 23, 2025 • 7:30 PM IST</div>
+                        <div class="teams">
+                            <div class="team">
+                                <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\rr.jpeg" alt="RR" class="team-logo">
+                                <span>Rajasthan Royals</span>
+                            </div>
+                            <div class="vs">vs</div>
+                            <div class="team">
+                                <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\srh.jpeg" alt="SRH" class="team-logo">
+                                <span>Sunrisers Hyderabad</span>
+                            </div>
+                        </div>
+                        <div class="match-info">
+                            <span class="venue">Sawai Mansingh Stadium, Jaipur</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Teams Tab -->
+            <div id="teams" class="tab-content">
+                <h2 class="section-title">IPL 2025 Teams</h2>
+                <div class="teams-grid">
+                    <div class="team-card">
+                        <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\mi.jpeg" alt="MI" class="team-logo-large">
+                        <h3>Mumbai Indians</h3>
+                        <p>Captain: Rohit Sharma</p>
+                        <p>Coach: Mark Boucher</p>
+                        <p>Home: Wankhede Stadium</p>
+                    </div>
+                    
+                    <div class="team-card">
+                        <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\csk.jpeg" alt="CSK" class="team-logo-large">
+                        <h3>Chennai Super Kings</h3>
+                        <p>Captain: MS Dhoni</p>
+                        <p>Coach: Stephen Fleming</p>
+                        <p>Home: M.A. Chidambaram Stadium</p>
+                    </div>
+                    
+                    <div class="team-card">
+                        <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\rcb.jpeg" alt="RCB" class="team-logo-large">
+                        <h3>Royal Challengers Bangalore</h3>
+                        <p>Captain: Virat Kohli</p>
+                        <p>Coach: Sanjay Bangar</p>
+                        <p>Home: M. Chinnaswamy Stadium</p>
+                    </div>
+                    
+                    <div class="team-card">
+                        <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\kkr.jpeg" alt="KKR" class="team-logo-large">
+                        <h3>Kolkata Knight Riders</h3>
+                        <p>Captain: Shreyas Iyer</p>
+                        <p>Coach: Chandrakant Pandit</p>
+                        <p>Home: Eden Gardens</p>
+                    </div>
+                    
+                    <div class="team-card">
+                        <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\dc.jpeg" alt="DC" class="team-logo-large">
+                        <h3>Delhi Capitals</h3>
+                        <p>Captain: Rishabh Pant</p>
+                        <p>Coach: Ricky Ponting</p>
+                        <p>Home: Arun Jaitley Stadium</p>
+                    </div>
+                    
+                    <div class="team-card">
+                        <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\pk.jpeg" alt="PBKS" class="team-logo-large">
+                        <h3>Punjab Kings</h3>
+                        <p>Captain: Mayank Agarwal</p>
+                        <p>Coach: Trevor Bayliss</p>
+                        <p>Home: PCA Stadium</p>
+                    </div>
+                    
+                    <div class="team-card">
+                        <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\rr.jpeg" alt="RR" class="team-logo-large">
+                        <h3>Rajasthan Royals</h3>
+                        <p>Captain: Sanju Samson</p>
+                        <p>Coach: Kumar Sangakkara</p>
+                        <p>Home: Sawai Mansingh Stadium</p>
+                    </div>
+                    
+                    <div class="team-card">
+                        <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\srh.jpeg" alt="SRH" class="team-logo-large">
+                        <h3>Sunrisers Hyderabad</h3>
+                        <p>Captain: Kane Williamson</p>
+                        <p>Coach: Brian Lara</p>
+                        <p>Home: Rajiv Gandhi Stadium</p>
+                    </div>
+                    
+                    <div class="team-card">
+                        <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\lsg.png" alt="LSG" class="team-logo-large">
+                        <h3>Lucknow Super Giants</h3>
+                        <p>Captain: KL Rahul</p>
+                        <p>Coach: Andy Flower</p>
+                        <p>Home: BRSABV Ekana Stadium</p>
+                    </div>
+                    
+                    <div class="team-card">
+                        <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\gt.png" alt="GT" class="team-logo-large">
+                        <h3>Gujarat Titans</h3>
+                        <p>Captain: Hardik Pandya</p>
+                        <p>Coach: Ashish Nehra</p>
+                        <p>Home: Narendra Modi Stadium</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stats Tab -->
+            <div id="stats" class="tab-content">
+                <h2 class="section-title">IPL 2025 Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stats-card">
+                        <h3>Top Run Scorers</h3>
+                        <table class="stats-table">
+                            <thead>
+                                <tr>
+                                    <th>Player</th>
+                                    <th>Team</th>
+                                    <th>Runs</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Virat Kohli</td>
+                                    <td>RCB</td>
+                                    <td>487</td>
+                                </tr>
+                                <tr>
+                                    <td>KL Rahul</td>
+                                    <td>LSG</td>
+                                    <td>432</td>
+                                </tr>
+                                <tr>
+                                    <td>Jos Buttler</td>
+                                    <td>RR</td>
+                                    <td>398</td>
+                                </tr>
+                                <tr>
+                                    <td>Shubman Gill</td>
+                                    <td>GT</td>
+                                    <td>376</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="stats-card">
+                        <h3>Top Wicket Takers</h3>
+                        <table class="stats-table">
+                            <thead>
+                                <tr>
+                                    <th>Player</th>
+                                    <th>Team</th>
+                                    <th>Wickets</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Jasprit Bumrah</td>
+                                    <td>MI</td>
+                                    <td>18</td>
+                                </tr>
+                                <tr>
+                                    <td>Yuzvendra Chahal</td>
+                                    <td>RR</td>
+                                    <td>16</td>
+                                </tr>
+                                <tr>
+                                    <td>Rashid Khan</td>
+                                    <td>GT</td>
+                                    <td>15</td>
+                                </tr>
+                                <tr>
+                                    <td>Mohammed Shami</td>
+                                    <td>GT</td>
+                                    <td>14</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="stats-card">
+                        <h3>Team Standings</h3>
+                        <table class="stats-table">
+                            <thead>
+                                <tr>
+                                    <th>Team</th>
+                                    <th>Pts</th>
+                                    <th>NRR</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Gujarat Titans</td>
+                                    <td>14</td>
+                                    <td>+0.832</td>
+                                </tr>
+                                <tr>
+                                    <td>Rajasthan Royals</td>
+                                    <td>12</td>
+                                    <td>+0.645</td>
+                                </tr>
+                                <tr>
+                                    <td>Lucknow Super Giants</td>
+                                    <td>12</td>
+                                    <td>+0.512</td>
+                                </tr>
+                                <tr>
+                                    <td>Chennai Super Kings</td>
+                                    <td>10</td>
+                                    <td>+0.483</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- News Tab -->
+            <div id="news" class="tab-content">
+                <h2 class="section-title">Latest IPL News</h2>
+                <div class="news-grid">
+                    <div class="news-card">
+                        <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\trophy.jpeg" alt="IPL Auction" class="news-image">
+                        <div class="news-content">
+                            <p class="news-date">April 15, 2025</p>
+                            <h3 class="news-title">IPL 2025 Auction: Big Names Go for Record Prices</h3>
+                            <p>The 2025 IPL auction saw several players break records with their price tags as teams looked to strengthen their squads for the upcoming season.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="news-card">
+                        <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\ipl logo.png" alt="New Rules" class="news-image">
+                        <div class="news-content">
+                            <p class="news-date">April 10, 2025</p>
+                            <h3 class="news-title">New Rules Introduced for IPL 2025 Season</h3>
+                            <p>The BCCI has announced several new rules for the 2025 season, including changes to the Impact Player rule and new guidelines for DRS.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="news-card">
+                        <img src="C:\Users\Dell\OneDrive\Desktop\IPL LIVE SCORE\images\msd.jpeg" alt="MS Dhoni" class="news-image">
+                        <div class="news-content">
+                            <p class="news-date">April 5, 2025</p>
+                            <h3 class="news-title">MS Dhoni Confirms This Will Be His Last IPL Season</h3>
+                            <p>Chennai Super Kings captain MS Dhoni has announced that the 2025 season will be his last in the IPL, bringing an end to an illustrious career.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Footer Section -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About IPL</h3>
+                    <p>The Indian Premier League is a professional Twenty20 cricket league in India contested during March or April and May of every year.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="#">Fixtures</a>
+                    <a href="#">Points Table</a>
+                    <a href="#">Player Stats</a>
+                    <a href="#">Team Standings</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/IPL/"><i class="fab fa-facebook"></i></a>
+                        <a href="https://x.com/IPL"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/iplt20/"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/ipl"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <p>Email: info@ipl2025.com</p>
+                    <p>Phone: +91 9876543210</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 IPL Score Tracker. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab switching functionality
+            const tabLinks = document.querySelectorAll('.tab-link');
+            
+            tabLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    tabLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Hide all tab contents
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Show the selected tab content
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Simulate live score updates
+            const matches = [
+                { team1: "Mumbai Indians", team2: "Chennai Super Kings", score1: "182/5", score2: "178/7", overs: "19.3" },
+                { team1: "Royal Challengers", team2: "Kolkata Knight Riders", score1: "165/4", score2: "169/3", overs: "18.2" },
+                { team1: "Delhi Capitals", team2: "Punjab Kings", score1: "195/6", score2: "192/8", overs: "20.0" }
+            ];
+            
+            setInterval(() => {
+                const liveScoreElement = document.querySelector('#live .live-score-container p');
+                if (liveScoreElement && document.getElementById('live').classList.contains('active')) {
+                    const randomMatch = matches[Math.floor(Math.random() * matches.length)];
+                    liveScoreElement.innerHTML = `
+                        <strong>Live Match:</strong> ${randomMatch.team1} ${randomMatch.score1} vs 
+                        ${randomMatch.team2} ${randomMatch.score2} (${randomMatch.overs} overs)
+                        <br><small>Updated: ${new Date().toLocaleTimeString()}</small>
+                    `;
+                }
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
